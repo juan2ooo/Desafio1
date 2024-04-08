@@ -6,6 +6,8 @@ void imprimem (int** m);
 void liberarm(int** m);
 int*** estructuraX(short tamano);
 short calcularLongitud(const short* ptr);
+int* invertirPrimera(int *m, short tamano);
+int* invertir(int *m, short tamano);
 int main()
 {
 
@@ -21,11 +23,13 @@ int** estructuraM(short tamano){
 
     for(int i = 0; i < tamano; i++){ // desde 1 porque la priemra estructura la asigno yo, entonces quiero que el ciclo se ejecute una vez menos
         if(i == 0){
-            fila = new int[tamano+1];
+            fila = new int[tamano+2];
             fila[0] = tamano;
+            fila[tamano+2] = -99;
             //primeraVez = false;
         }else{
-            fila = new int[tamano];
+            fila = new int[tamano+1];
+            fila[tamano+1] = -99;
         }
 
 
@@ -46,6 +50,7 @@ int** estructuraM(short tamano){
 
 
         }
+
         m[i] = fila;
     }
     return m;
@@ -77,13 +82,37 @@ void liberarm(int** m){
     delete[] m;
 }
 
+int* invertir(int *m, short tamano){
+    short inicio = 0, final = tamano;
+    while(inicio != final){
+        m[inicio] = m[inicio] + m[final];
+        m[final] = m[inicio] - m[final];
+        m[inicio] = m[inicio] - m[final];
+        inicio ++;
+        final --;
+    }
+    return m;
+}
+
+int* invertirPrimera(int *m, short tamano){
+    short inicio = 1, final = tamano+1;
+    while(inicio != final){
+        m[inicio] = m[inicio] + m[final];
+        m[final] = m[inicio] - m[final];
+        m[inicio] = m[inicio] - m[final];
+        inicio ++;
+        final --;
+    }
+    return m;
+}
+
 
 
 short calcularLongitud(const short* ptr) {
     short longitud = 0;
 
     // Contar elementos hasta encontrar el final del array (suponemos que el final es un valor especial, como -1)
-    while (*ptr != -1) {
+    while (*ptr != -99) {
         ++longitud;
         ++ptr;
     }
