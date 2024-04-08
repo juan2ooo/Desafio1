@@ -6,10 +6,17 @@ void imprimem (int** m);
 void liberarm(int** m);
 int*** estructuraX(short tamano);
 short calcularLongitud(const short* ptr);
-int* invertirPrimera(int *m, short tamano);
-int* invertir(int *m, short tamano);
+void invertirPrimera(int *m, short tamano);
+void invertir(int *m, short tamano);
+void invertirNumerosM(int **m);
+void calcularTraspuesta(int **matriz);
 int main()
 {
+    int **prueba = estructuraM(5);
+    invertirNumerosM(prueba);
+    calcularTraspuesta(prueba);
+    imprimem(prueba);
+    liberarm(prueba);
 
     return 0;
 }
@@ -25,11 +32,11 @@ int** estructuraM(short tamano){
         if(i == 0){
             fila = new int[tamano+2];
             fila[0] = tamano;
-            fila[tamano+2] = -99;
+            fila[tamano+1] = -99;
             //primeraVez = false;
         }else{
             fila = new int[tamano+1];
-            fila[tamano+1] = -99;
+            fila[tamano] = -99;
         }
 
 
@@ -82,28 +89,34 @@ void liberarm(int** m){
     delete[] m;
 }
 
-int* invertir(int *m, short tamano){
-    short inicio = 0, final = tamano;
-    while(inicio != final){
+void invertir(int *m, short tamano){
+    short inicio = 0, final = tamano-1;
+    int a = 0;
+
+    for(int i = 0; i < tamano/2; i++){
+
         m[inicio] = m[inicio] + m[final];
+
+
+
         m[final] = m[inicio] - m[final];
+
+
         m[inicio] = m[inicio] - m[final];
         inicio ++;
         final --;
     }
-    return m;
 }
 
-int* invertirPrimera(int *m, short tamano){
-    short inicio = 1, final = tamano+1;
-    while(inicio != final){
+void invertirPrimera(int *m, short tamano){
+    short inicio = 1, final = tamano;
+     for(int i = 0; i < tamano/2; i++){
         m[inicio] = m[inicio] + m[final];
         m[final] = m[inicio] - m[final];
         m[inicio] = m[inicio] - m[final];
         inicio ++;
         final --;
     }
-    return m;
 }
 
 
@@ -118,4 +131,34 @@ short calcularLongitud(const short* ptr) {
     }
 
     return longitud;
+}
+
+
+void invertirNumerosM(int **m){
+    short tamano = m[0][0];
+    for(int i = 0; i < tamano; i++){
+        if(!i){
+            invertirPrimera(m[i],tamano);
+        }else{
+            invertir(m[i], tamano);
+        }
+    }
+}
+
+void calcularTraspuesta(int **matriz) {
+    short tamano = matriz[0][0];
+    for (int i = 0; i < tamano; i++) {
+        for (int j = i+1; j < tamano; j++) {
+            if(not i){
+                int temp = matriz[i][j+1];
+                matriz[i][j+1] = matriz[j][i];
+                matriz[j][i] = temp;
+            }else{
+                int temp = matriz[i][j];
+                matriz[i][j] = matriz[j][i];
+                matriz[j][i] = temp;
+            }
+
+        }
+    }
 }
