@@ -25,76 +25,81 @@ void imprimirHastaFin(int *puntero);
 
 
 int* estructuraX(short *K, short tam){
+    //tam++;
     short fila = K[0], colm = K[1];
-    //int *p = nullptr;
-    int *x = new int[tam];
-    //int x[tam];
+    int *p = nullptr;
+    //int *x = new int[tam+2];
+    int x[tam+2];
     //int a = encontrarImparCercano(encontrarMayor(K[0], K[1]));
     x[0] =  encontrarImparCercano(encontrarMayor(K[0], K[1])); //el tamaño inicial lo determina la poscicon de k
-    short rotacion[tam-2];
+    //short rotacion[tam-2];
 
 
     short vueltas = 0;
     short j = 1;
-    for(short i = 2; i < tam ; i++){
+    short aumentoDeM = 1;
+    for(short i = 2; i <= tam +2 ; i++){
         int **m1 = estructuraM(x[0]);
         int **m2 = estructuraM(x[0]);
+        aumentoDeM = 0;
         if(K[i] == 0){
-            short aumentoDeM = 1;
+            //short aumentoDeM = 0;
             while(true){
                 //short a =m1[fila][colm] , b= m2[fila][colm];
 
-                while(m1[fila][colm] != m2[fila][colm] and vueltas != 3){
+                while(m1[fila][colm] != m2[fila][colm] and vueltas <= 3){
                     rotar(m1);
                     vueltas++;
                 }
                 //cout << "vueltas de 1: " << vueltas;
 
 
-                if(vueltas == 3){
+                if(vueltas >= 3){
                     liberarm(m1);
-                    m1 = estructuraM( x[0]+2*aumentoDeM); //aumentar la m
                     aumentoDeM++;
+                    m1 = estructuraM( x[0]+2*aumentoDeM); //aumentar la m
+
                     //cout << "numero de vueltas para abrir la cerradura " << vueltas;
                     vueltas = 0;
                     continue;
                 }else{
                     //vueltas = 0;
-                    x[i-2] = x[0]+2*(aumentoDeM-1);
+                    x[i-2] = x[0]+2*(aumentoDeM);
                     cout << "numero de vueltas de " << j <<": " << vueltas << endl;
                     j++;
                     vueltas = 0;
                     liberarm(m1);
                     liberarm(m2);
-                    //aumentoDeM = 1;
+                    //aumentoDeM = 0;
                     break;
                 }
             }
 
         }else{
-
+            short aumentoDeM = 0;
             if(K[i] == 1){
-                short aumentoDeM = 1;
+                //aumentoDeM = 1;
                 while(true){
                     //short a =m1[fila][colm] , b= m2[fila][colm];
 
-                    while(m1[fila][colm] <= m2[fila][colm] and vueltas != 3){ //para el caso en el que se menor entra al while cuando sea menor pues se buscara rotar para que esto sea falso lo que implica que el primer elemento sea mayor (pues es mentira de que el sugundo es mayor no queda de otra que m1 sea mayor
+                    while(m1[fila][colm] <= m2[fila][colm] and vueltas <= 3){ //para el caso en el que se menor entra al while cuando sea menor pues se buscara rotar para que esto sea falso lo que implica que el primer elemento sea mayor (pues es mentira de que el sugundo es mayor no queda de otra que m1 sea mayor
                         rotar(m1);
                         vueltas++;
                     }
                     //cout << "vueltas de 1: " << vueltas;
 
 
-                    if(vueltas == 3){
+                    if(vueltas >= 3){
                         liberarm(m1);
-                        m1 = estructuraM( x[0]+2*aumentoDeM); //aumentar la m
                         aumentoDeM++;
+                        m1 = estructuraM( x[0]+2*aumentoDeM); //aumentar la m
+
                         //cout << "numero de vueltas para abrir la cerradura " << vueltas;
                         vueltas = 0;
                         continue;
                     }else{
                         //vueltas = 0;
-                        x[i-2] = x[0]+2*(aumentoDeM-1);
+                        x[i-2] = x[0]+2*(aumentoDeM);
                         cout << "numero de vueltas de " << j <<": " << vueltas << endl;
                         j++;
                         vueltas = 0;
@@ -104,27 +109,29 @@ int* estructuraX(short *K, short tam){
                     }
                 }
             }else{
-                short aumentoDeM = 1;
+                short aumentoDeM = 0;
                 while(true){
                     //short a =m1[fila][colm] , b= m2[fila][colm];
 
-                    while(m1[fila][colm] >= m2[fila][colm] and vueltas != 3){
-                        rotar(m1);
+                    while(m1[fila][colm] >= m2[fila][colm] and vueltas <= 3){
+                        rotar(m2);
                         vueltas++;
                     }
                     //cout << "vueltas de 1: " << vueltas;
 
 
-                    if(vueltas == 3){
-                        liberarm(m1);
-                        m1 = estructuraM( x[0]+2*aumentoDeM); //aumentar la m
+                    if(vueltas >= 3){
+                        liberarm(m2);
                         aumentoDeM++;
+                        m2 = estructuraM( x[0]+2*aumentoDeM); //aumentar la m
+
                         //cout << "numero de vueltas para abrir la cerradura " << vueltas;
                         vueltas = 0;
                         continue;
                     }else{
                         //vueltas = 0;
-                        x[i-2] = x[0]+2*(aumentoDeM-1);
+                        x[i-2] = encontrarImparCercano(encontrarMayor(K[0], K[1]));
+                        x[i-1] = x[0]+2*(aumentoDeM);
                         cout << "numero de vueltas de " << j <<": " << vueltas << endl;
                         j++;
                         vueltas = 0;
@@ -138,9 +145,9 @@ int* estructuraX(short *K, short tam){
 
         }
     }
-    x[tam-2] =  encontrarImparCercano(encontrarMayor(K[0], K[1]));
-    x[tam-1] = -99;
-    return x;
+    x[tam-1] =  encontrarImparCercano(encontrarMayor(K[0], K[1]));
+    x[tam+1] = -99;
+    return p;
 }
 
 

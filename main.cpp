@@ -54,7 +54,7 @@ int main()
     int *x = estructuraX(k,response);
     cout << endl << "Una X para esa regla K es: " << "(";
     imprimirHastaFin(x);
-    cout << ")";
+    cout << ")" << endl;
 
 
 
