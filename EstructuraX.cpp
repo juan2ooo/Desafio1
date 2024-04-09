@@ -28,7 +28,8 @@ int* estructuraX(short *K, short tam){
     short fila = K[0], colm = K[1];
     //int *p = nullptr;
     int *x = new int[tam];
-    //int x[tam-1];
+    //int x[tam];
+    //int a = encontrarImparCercano(encontrarMayor(K[0], K[1]));
     x[0] =  encontrarImparCercano(encontrarMayor(K[0], K[1])); //el tamaño inicial lo determina la poscicon de k
     short rotacion[tam-2];
 
@@ -138,7 +139,7 @@ int* estructuraX(short *K, short tam){
         }
     }
     x[tam-2] =  encontrarImparCercano(encontrarMayor(K[0], K[1]));
-    x[tam] = -99;
+    x[tam-1] = -99;
     return x;
 }
 

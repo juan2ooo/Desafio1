@@ -31,7 +31,8 @@ int main()
     cout << "De que longitud sera k? ";
     cin >> response;
 
-    short *k = new short[response];
+    //short *k = new short[response];
+    short k [response+2];
 
     cout <<endl << "Ingrese el valor de la fila: ";
     cin >> fila;
@@ -41,7 +42,7 @@ int main()
     cin >> colm;
     k[1] = colm;
 
-    for(short i = 0; i < response; i++){
+    for(short i = 2; i < response+2; i++){
         short response1;
         cout << "Ingrese -1, 0, 1: ";
         cin >> response1;
@@ -49,11 +50,17 @@ int main()
     }
 
 
-    int *x = estructuraX(k,4);
+    cout << endl << "Para la regla K se tiene la siguiente configuracion de rotacion para las m"<<endl;
+    int *x = estructuraX(k,response);
+    cout << endl << "Una X para esa regla K es: " << "(";
     imprimirHastaFin(x);
+    cout << ")";
+
+
+
     //cout << x[2];
     delete[] x;
-    delete [] k;
+    //delete [] k;
     return 0;
 }
 
