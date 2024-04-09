@@ -14,6 +14,7 @@ short calcularLongitud(const short* ptr);
 void invertirPrimera(int *m, short tamano);
 void invertir(int *m, short tamano);
 void invertirNumerosM(int **m);
+void imprimirHastaFin(int *puntero);
 
 
 
@@ -25,12 +26,31 @@ short contarElementos(short *arr);
 
 int main()
 {
-    short *k = new short[3]{3, 4, 1};
+    short response = 0, fila, colm;
+
+    cout << "De que longitud sera k? ";
+    cin >> response;
+
+    short *k = new short[response];
+
+    cout <<endl << "Ingrese el valor de la fila: ";
+    cin >> fila;
+    k[0] = fila;
+
+    cout << endl << "Ingrese el valor de la columna: ";
+    cin >> colm;
+    k[1] = colm;
+
+    for(short i = 0; i < response; i++){
+        short response1;
+        cout << "Ingrese -1, 0, 1: ";
+        cin >> response1;
+        k[i] = response1;
+    }
 
 
-    int *x = estructuraX(k,3);
-    cout << endl << x[0] <<endl;
-    cout << x[1] <<endl;
+    int *x = estructuraX(k,4);
+    imprimirHastaFin(x);
     //cout << x[2];
     delete[] x;
     delete [] k;

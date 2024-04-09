@@ -21,20 +21,23 @@ void invertirNumerosM(int **m);
 int* estructuraX(short *K, short tam);
 int encontrarMayor(int num1, int num2);
 short contarElementos(short *arr);
+void imprimirHastaFin(int *puntero);
+
 
 int* estructuraX(short *K, short tam){
     short fila = K[0], colm = K[1];
     //int *p = nullptr;
-    int *x = new int[tam-1];
+    int *x = new int[tam];
     //int x[tam-1];
     x[0] =  encontrarImparCercano(encontrarMayor(K[0], K[1])); //el tamaño inicial lo determina la poscicon de k
     short rotacion[tam-2];
-    int **m1 = estructuraM(x[0]);
-    int **m2 = estructuraM(x[0]);
+
 
     short vueltas = 0;
     short j = 1;
     for(short i = 2; i < tam ; i++){
+        int **m1 = estructuraM(x[0]);
+        int **m2 = estructuraM(x[0]);
         if(K[i] == 0){
             short aumentoDeM = 1;
             while(true){
@@ -135,6 +138,7 @@ int* estructuraX(short *K, short tam){
         }
     }
     x[tam-2] =  encontrarImparCercano(encontrarMayor(K[0], K[1]));
+    x[tam] = -99;
     return x;
 }
 
@@ -168,4 +172,11 @@ short encontrarImparCercano(short numero) {
     // Si el número es par, sumamos 1
     else
         return numero + 1;
+}
+
+void imprimirHastaFin(int *puntero) {
+    while (*puntero != -99) {
+        cout << *puntero << " ";
+        puntero++;
+    }
 }
