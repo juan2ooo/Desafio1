@@ -142,3 +142,9 @@ void calcularTraspuesta(int **matriz) {
         }
     }
 }
+
+
+void rotar(int **m){
+    invertirNumerosM(m);
+    calcularTraspuesta(m);
+}
